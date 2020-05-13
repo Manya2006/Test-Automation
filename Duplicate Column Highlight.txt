@@ -1,0 +1,35 @@
+Sub SheetColumnsTraverse()
+Dim myRange As Range
+Dim Val As String
+Dim myCol As Integer
+Dim strsheetcount As Integer
+Dim i As Integer
+Dim Excel As Object
+
+Dim myCell As Range
+Set Excel = CreateObject("excel.application")
+Excel.Application.DisplayAlerts = True
+
+strsheetcount = ActiveWorkbook.Worksheets.Count
+MsgBox strsheetcount
+For i = 1 To strsheetcount
+                ActiveWorkbook.Worksheets(i).Activate
+                
+                'ActiveWorkbook.Sheets.Item(1).Range("A1").Select
+                
+                 myCol = Range(Cells(1, 1), Cells(1, 1).End(xlToRight)).Count
+                 
+                 Set myRange = Range(Cells(1, 1), Cells(1, myCol))
+                 For Each myCell In myRange
+                 Val = myCell.Text
+                     If (WorksheetFunction.CountIf(myRange, Val) > 1) Then
+                ' CountIf : counts the number of cells within a range that meets the given condition.
+                         myCell.Interior.ColorIndex = 3
+                     End If
+                 Next myCell
+Next i
+ActiveWorkbook.Save
+Excel.Quit
+Set Excel = Nothing
+
+End Sub

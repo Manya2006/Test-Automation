@@ -1,0 +1,35 @@
+Below is the code you can use to remove the spaces in column header from all the worksheets in an excel file.
+
+How to run the code:
+
+1.	Copy the same in notepad and save it as .Vbs. 
+2.	Download test data sheet from MTM and place it in your local box
+3.	Provide the same path in below code and save 
+4.	Execute the code.
+
+
+Set excel=createobject("excel.application")  
+   excel.Application.DisplayAlerts=True
+   strpath = "C:\MSI\Auto\Macro\Test Data_BindingRestrictions_Customer"
+   Set workbookdata=excel.Workbooks.Open(strpath)
+   strworkbookcount = excel.Worksheets.Count
+   For strloop1 = 1 To strworkbookcount
+      Set worksheet1=excel.Worksheets.Item(strloop1)  
+      RowCount = worksheet1.usedrange.rows.count 
+      If Rowcount > 1 Then
+                
+                colCount = worksheet1.usedrange.columns.count 
+                For strloop2 = 1 To colCount                        
+                                strcellvalue = (worksheet1.cells(1,strloop2))
+                  worksheet1.cells(1,strloop2) = Replace(strcellvalue," ", "")
+                Next
+      End If
+     
+      Set worksheet1 = Nothing
+      
+      Next
+                msgbox "Completed"
+excel.ActiveWorkbook.Save
+excel.Quit
+Set worksheet1=Nothing  
+Set excel=Nothing
